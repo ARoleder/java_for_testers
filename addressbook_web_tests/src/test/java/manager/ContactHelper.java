@@ -19,11 +19,6 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public boolean isContactPresent() {
-        openHomePage();
-        return manager.isElementPresent(By.name("selected[]"));
-    }
-
     public void createContact(ContactData contact) {
         openAddContactPage();
         fillContactForm(contact);
@@ -67,5 +62,10 @@ public class ContactHelper extends HelperBase {
 
     private void submitContactCreation() {
         click(By.name("submit"));
+    }
+
+    public int getCount() {
+        openHomePage();
+        return manager.driver.findElements(By.name("selected[]")).size();
     }
 }
