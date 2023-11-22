@@ -56,12 +56,8 @@ public class ContactHelper extends HelperBase {
         type(By.name("nickname"), contact.nickname());
         type(By.name("company"), contact.company());
         type(By.name("address"), contact.address());
-        type(By.name("home"), contact.homephone());
         type(By.name("mobile"), contact.mobilephone());
-        type(By.name("work"), contact.workphone());
         type(By.name("email"), contact.email());
-        type(By.name("email2"), contact.email2());
-        type(By.name("email3"), contact.email3());
         type(By.name("address2"), contact.secondaryaddress());
         type(By.name("phone2"), contact.home());
         type(By.name("notes"), contact.notes());
