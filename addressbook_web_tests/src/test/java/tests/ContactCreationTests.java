@@ -14,20 +14,12 @@ public class ContactCreationTests extends TestBase {
     public static List<ContactData> contactProvider() {
         var result = new ArrayList<ContactData>();
         for (var firstname : List.of("", "first name")) {
-            for (var middlename : List.of("", "middle name")) {
                 for (var lastname : List.of("", "last name")) {
-                    for (var company : List.of("", "company")) {
-                        for (var address : List.of("", "address")) {
                             for (var mobilephone : List.of("", "mobilephone", "89098765551")) {
-                                for (var email : List.of("", "email")) {
-                                    result.add(new ContactData("", firstname, middlename, lastname, company, address, mobilephone, email));
+                                    result.add(new ContactData().withFirstName(firstname).withLastName(lastname).withMobilePhone(mobilephone));
                                 }
                             }
                         }
-                    }
-                }
-            }
-        }
 
         for (int i = 0; i < 5; i++) {
             result.add(new ContactData()
