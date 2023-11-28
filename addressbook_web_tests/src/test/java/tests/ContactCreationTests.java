@@ -16,7 +16,7 @@ public class ContactCreationTests extends TestBase {
         for (var firstname : List.of("", "first name")) {
             for (var lastname : List.of("", "last name")) {
                 for (var mobilephone : List.of("", "mobilephone", "89098765551")) {
-                    for (var photo : List.of("src/test/resources/images/avatar.jpg")) {
+                    for (var photo : List.of(randomFile("src/test/resources/images"))) {
                         result.add(new ContactData().withFirstName(firstname).withLastName(lastname).withMobilePhone(mobilephone).withPhoto(photo));
                     }
                 }
@@ -28,7 +28,7 @@ public class ContactCreationTests extends TestBase {
                     .withFirstName(randomString(i * 5))
                     .withLastName(randomString(i * 5))
                     .withMobilePhone("89990876655")
-                    .withPhoto("src/test/resources/images/avatar.jpg"));
+                    .withPhoto(randomFile("src/test/resources/images")));
         }
         return result;
     }
@@ -51,7 +51,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "first name'", "", "", "", "", "", "","src/test/resources/images/avatar.jpg")));
+                new ContactData("", "first name'", "", "", "", "", "", "",randomFile("src/test/resources/images"))));
         return result;
     }
 
