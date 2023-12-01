@@ -2,10 +2,15 @@ package generator;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import common.CommonFunctions;
 import model.ContactData;
 import model.GroupData;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -23,7 +28,7 @@ public class Generator {
     @Parameter(names = {"--count", "-c"})
     int count;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         var generator = new Generator();
         JCommander.newBuilder()
                 .addObject(generator)
@@ -33,7 +38,7 @@ public class Generator {
 
     }
 
-    private void run() {
+    private void run() throws IOException {
         var data = generate();
         save(data);
     }
@@ -54,7 +59,8 @@ public class Generator {
             result.add(new ContactData()
                     .withFirstName(CommonFunctions.randomString(i * 5))
                     .withLastName(CommonFunctions.randomString(i * 5))
-                    .withMobilePhone("89990876655"));
+                    .withMobilePhone("89990876655")
+                    .withPhoto(CommonFunctions.randomFile("src/test/resources/images")));
         }
         return result;
     }
@@ -70,7 +76,18 @@ public class Generator {
         return result;
     }
 
-    private void save(Object data) {
+    private void save(Object data) throws IOException {
+        if ("json".equals(format)){
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            var json = mapper.writeValueAsString(data);
+
+            try (var writer = new FileWriter(output)) {
+                writer.write(json);
+            }
+        } else {
+            throw new IllegalArgumentException("Неизвестный формат данных " + format);
+        }
 
     }
 }
