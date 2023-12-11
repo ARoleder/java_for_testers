@@ -60,9 +60,9 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("negativeContactProvider")
     public void canNotCreateContacts(ContactData contact) {
-        var oldContacts = app.contacts().getList();
+        var oldContacts = app.jdbc().getContactList();
         app.contacts().createContact(contact);
-        var newContacts = app.contacts().getList();
+        var newContacts = app.jdbc().getContactList();
         Assertions.assertEquals(newContacts, oldContacts);
     }
 }
