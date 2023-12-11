@@ -13,9 +13,9 @@ public class ContactHelper extends HelperBase {
     }
 
     public void openHomePage() {
-        if (!manager.isElementPresent(By.id("maintable"))) {
+        //if (!manager.isElementPresent(By.id("maintable"))) {
             click(By.linkText("home"));
-        }
+        //}
     }
 
     public void openAddContactPage() {
