@@ -37,9 +37,9 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContacts(ContactData contact) {
-        var oldContacts = app.jdbc().getContactList();
+        var oldContacts = app.hbm().getContactList();
         app.contacts().createContact(contact);
-        var newContacts = app.jdbc().getContactList();
+        var newContacts = app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
@@ -53,16 +53,17 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "first name'", "", "", "", "", "", "", CommonFunctions.randomFile("src/test/resources/images"))));
+       //         new ContactData("", "first name'", "", "", "", "", "", "", CommonFunctions.randomFile("src/test/resources/images"))));
+                new ContactData("", "first name'", "", "", "", "", "", "")));
         return result;
     }
 
     @ParameterizedTest
     @MethodSource("negativeContactProvider")
     public void canNotCreateContacts(ContactData contact) {
-        var oldContacts = app.jdbc().getContactList();
+        var oldContacts = app.hbm().getContactList();
         app.contacts().createContact(contact);
-        var newContacts = app.jdbc().getContactList();
+        var newContacts = app.hbm().getContactList();
         Assertions.assertEquals(newContacts, oldContacts);
     }
 }

@@ -62,7 +62,10 @@ public class Generator {
                     .withFirstName(CommonFunctions.randomString(i * 5))
                     .withLastName(CommonFunctions.randomString(i * 5))
                     .withMobilePhone("89990876655")
-                    .withPhoto(CommonFunctions.randomFile("src/test/resources/images")));
+                    .withAddress(CommonFunctions.randomString(i * 3))
+                    .withCompany(CommonFunctions.randomString(i * 3))
+                    .withEmail(CommonFunctions.randomString(i * 3)));
+            //.withPhoto(CommonFunctions.randomFile("src/test/resources/images")));
         }
         return result;
     }
@@ -79,7 +82,7 @@ public class Generator {
     }
 
     private void save(Object data) throws IOException {
-        if ("json".equals(format)){
+        if ("json".equals(format)) {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
             var json = mapper.writeValueAsString(data);
