@@ -16,7 +16,7 @@ public class ContactHelper extends HelperBase {
 
     public void openHomePage() {
         //if (!manager.isElementPresent(By.id("maintable"))) {
-            click(By.linkText("home"));
+        click(By.linkText("home"));
         //}
     }
 
@@ -41,6 +41,14 @@ public class ContactHelper extends HelperBase {
 
     private void selectGroup(GroupData group) {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
+    }
+
+    private void selectGroupForAdd(GroupData group) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
+    }
+
+    private void selectGroupFilter(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 
     public void removeContact(ContactData contact) {
@@ -86,6 +94,10 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home page"));
     }
 
+    private void removeSelectedContactFromGroup() {
+        click(By.name("remove"));
+    }
+
     private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstname());
         type(By.name("middlename"), contact.middlename());
@@ -129,5 +141,24 @@ public class ContactHelper extends HelperBase {
             contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname));
         }
         return contacts;
+    }
+
+    public void addContactInGroup(GroupData group, ContactData contact) {
+        openHomePage();
+        selectGroupForAdd(group);
+        selectContact(contact);
+        submitAddContactInGroup();
+        openHomePage();
+    }
+
+    private void submitAddContactInGroup() {
+        click(By.xpath("//input[@name='add']"));
+    }
+
+    public void removeContactFromGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectGroupFilter(group);
+        selectContact(contact);
+        removeSelectedContactFromGroup();
     }
 }
