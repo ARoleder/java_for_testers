@@ -45,7 +45,7 @@ public class ContactRecord {
     @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     public List<GroupRecord> groups;
-    
+
     public ContactRecord() {
     }
 
