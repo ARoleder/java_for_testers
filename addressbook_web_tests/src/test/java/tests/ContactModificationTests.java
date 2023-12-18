@@ -46,12 +46,17 @@ public class ContactModificationTests extends TestBase {
         var index = rnd.nextInt(oldContacts.size());
         var contact = oldContacts.get(index);
         var group = app.hbm().getGroupList().get(0);
-        var expectedContactListInGroup = new ArrayList<>(oldContacts);
+        var oldContactInGroup = app.hbm().getContactsInGroup(group);
+        var expectedContactListInGroup = new ArrayList<>(oldContactInGroup);
+        if (!expectedContactListInGroup.contains(contact)) //проверка на то, что в ожидаемом списке уже нет такого контакта, так как рандомно может быть выбран любой контак, даже уже находящийся в группе
+        {
+            expectedContactListInGroup.add(contact);
+        }
         if (app.hbm().isContactInGroup(group, contact)) {
             app.contacts().removeContactFromGroup(contact, group);//если рандомный контакт уже добавлен в группу, то удаляем его из группы
         }
         app.contacts().addContactInGroup(group, contact);
-        var newContacts = app.hbm().getContactList();
+        var newContacts = app.hbm().getContactsInGroup(group);
         var newContactListInGroup = new ArrayList<>(newContacts);
 
         Comparator<ContactData> compareById = (o1, o2) -> {
@@ -77,12 +82,14 @@ public class ContactModificationTests extends TestBase {
         var index = rnd.nextInt(oldContacts.size());
         var contact = oldContacts.get(index);
         var group = app.hbm().getGroupList().get(0);
-        var expectedContactListInGroup = new ArrayList<>(oldContacts);
+        var oldContactsInGroup = app.hbm().getContactsInGroup(group);
+        var expectedContactListInGroup = new ArrayList<>(oldContactsInGroup);
+        expectedContactListInGroup.remove(contact);
         if (!app.hbm().isContactInGroup(group, contact)) {
             app.contacts().addContactInGroup(group, contact); //если контакт не добавлен в группу, то добавить его в группу
         }
         app.contacts().removeContactFromGroup(contact, group);
-        var newContacts = app.hbm().getContactList();
+        var newContacts = app.hbm().getContactsInGroup(group);
         var newContactListInGroup = new ArrayList<>(newContacts);
 
         Comparator<ContactData> compareById = (o1, o2) -> {
