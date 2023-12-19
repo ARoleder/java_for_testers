@@ -21,11 +21,11 @@ public class ContactRecord {
     public String email;
     public String nickname = new String();
     public String title = new String();
-    public String home = new String();
-    public String work = new String();
+    public String home;
+    public String work;
     public String fax = new String();
-    public String email2 = new String();
-    public String email3 = new String();
+    public String email2;
+    public String email3;
     public String im = new String();
     public String im2 = new String();
     public String im3 = new String();
@@ -36,10 +36,10 @@ public class ContactRecord {
     public Integer aday = 0;
     public String amonth = new String();
     public String ayear = new String();
-    public String address2 = new String();
-    public String phone2 = new String();
+    public String address2;
+    public String phone2;
     public String notes = new String();
-  //  public Date deprecated = new Date();
+    //  public Date deprecated = new Date();
 
     @ManyToMany
     @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),
@@ -49,7 +49,7 @@ public class ContactRecord {
     public ContactRecord() {
     }
 
-    public ContactRecord(int id, String firstname, String middlename, String lastname, String company, String address, String mobile, String email) {
+    public ContactRecord(int id, String firstname, String middlename, String lastname, String company, String address, String mobile, String email, String home, String work, String phone2, String email2, String email3, String address2) {
         this.id = id;
         this.firstname = firstname;
         this.middlename = middlename;
@@ -58,5 +58,11 @@ public class ContactRecord {
         this.address = address;
         this.mobilephone = mobile;
         this.email = email;
+        this.home = home;
+        this.work = work;
+        this.phone2 = phone2;
+        this.email2 = email2;
+        this.email3 = email3;
+        this.address2 = address2;
     }
 }
