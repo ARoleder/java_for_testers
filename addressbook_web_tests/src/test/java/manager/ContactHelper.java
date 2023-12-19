@@ -166,18 +166,21 @@ public class ContactHelper extends HelperBase {
     }
 
     public String getPhones(ContactData contact) {
+        openHomePage();
         return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
+                String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText().replace("\n","");
     }
 
     public String getEmails(ContactData contact) {
+        openHomePage();
         return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[5]", contact.id()))).getText();
+                String.format("//input[@id='%s']/../../td[5]", contact.id()))).getText().replace("\n","");
     }
 
-    public String getAddresses(ContactData contact) {
+    public String getAddress(ContactData contact) {
+        openHomePage();
         return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[4]", contact.id()))).getText();
+                String.format("//input[@id='%s']/../../td[4]", contact.id()))).getText().replace("\n","");
     }
 
     public Map<String, String> getPhones() {
@@ -186,8 +189,44 @@ public class ContactHelper extends HelperBase {
         for (WebElement row : rows) {
             var id = row.findElement(By.tagName("input")).getAttribute("id");
             var phones = row.findElements(By.tagName("td")).get(5).getText();
-            result.put(id,phones);
+            result.put(id, phones);
         }
         return result;
+    }
+
+    public String getEmailsFromEditForm(ContactData contact) {
+        openHomePage();
+        initContactModification(contact);
+        var email = manager.driver.findElement(By.name("email")).getAttribute("value");
+        var email2 = manager.driver.findElement(By.name("email2")).getAttribute("value");
+        var email3 = manager.driver.findElement(By.name("email3")).getAttribute("value");
+        var emailResult = email + email2  + email3;
+        return emailResult;
+    }
+    public String getAddressesFromEditForm(ContactData contact) {
+        openHomePage();
+        initContactModification(contact);
+        var address = manager.driver.findElement(By.name("address")).getAttribute("value");
+        var address2 = manager.driver.findElement(By.name("address2")).getAttribute("value");
+        var addressResult = address + address2 ;
+        return addressResult;
+    }
+
+    public Object getPhonesFromEditForm(ContactData contact) {
+        openHomePage();
+        initContactModification(contact);
+        var home = manager.driver.findElement(By.name("home")).getAttribute("value");
+        var mobile = manager.driver.findElement(By.name("mobile")).getAttribute("value");
+        var work = manager.driver.findElement(By.name("work")).getAttribute("value");
+        var phone2 = manager.driver.findElement(By.name("phone2")).getAttribute("value");
+        var emailResult = home + mobile + work + phone2;
+        return emailResult;
+    }
+
+    public String getAddressFromEditForm(ContactData contact) {
+        openHomePage();
+        initContactModification(contact);
+        var address = manager.driver.findElement(By.name("address")).getAttribute("value");
+        return address;
     }
 }
