@@ -13,8 +13,8 @@ public class JamesCliHelper extends HelperBase {
                 "java", "-cp",
                 "james-server-jpa-app.lib/*",
                 "org.apache.james.cli.ServerCmd",
-            //    "--username", "james-admin",
-            //    "--password", "xKrdBK1eWM",
+                "--username", "james-admin",
+                "--password", "xKrdBK1eWM",
                 "AddUser", email, password);
         cmd.setWorkingDirectory(manager.property("james.workingDir"));
         CircularOutputStream out = new CircularOutputStream();
