@@ -7,7 +7,7 @@ import ru.stqa.mantis.model.IssueData;
 public class IssueCreationTests extends TestBase {
 
     @Test
-    void canCreatEIssue () {
+    void canCreateIssue () {
         app.rest().createIssue(new IssueData()
                 .withSummary(CommonFunctions.randomString(10))
                 .withDescription(CommonFunctions.randomString(10))
