@@ -1,5 +1,6 @@
 package manager;
 
+import io.qameta.allure.Step;
 import model.ContactData;
 import model.GroupData;
 import org.openqa.selenium.By;
@@ -29,6 +30,7 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
+    @Step
     public void createContact(ContactData contact) {
         openAddContactPage();
         fillContactForm(contact);
@@ -36,6 +38,7 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
+    @Step
     public void createContact(ContactData contact, GroupData group) {
         openAddContactPage();
         fillContactForm(contact);
@@ -56,6 +59,7 @@ public class ContactHelper extends HelperBase {
         new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 
+    @Step
     public void removeContact(ContactData contact) {
         openHomePage();
         selectContact(contact);
@@ -64,6 +68,7 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
+    @Step
     public void removeAllContacts() {
         openHomePage();
         selectAllContacts();
@@ -71,6 +76,7 @@ public class ContactHelper extends HelperBase {
         closeAlert();
     }
 
+    @Step
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
         openHomePage();
         initContactModification(contact);
@@ -79,6 +85,7 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
+    @Step
     private void removeSelectedContacts() {
         click(By.xpath("//input[@value=\'Delete\']"));
     }
@@ -148,6 +155,7 @@ public class ContactHelper extends HelperBase {
         return contacts;
     }
 
+    @Step
     public void addContactInGroup(GroupData group, ContactData contact) {
         openHomePage();
         selectGroupForAdd(group);
@@ -160,6 +168,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@name='add']"));
     }
 
+    @Step
     public void removeContactFromGroup(ContactData contact, GroupData group) {
         openHomePage();
         selectGroupFilter(group);

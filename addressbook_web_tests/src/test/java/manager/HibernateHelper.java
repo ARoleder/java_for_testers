@@ -84,6 +84,7 @@ public class HibernateHelper extends HelperBase {
         return new ContactData("" + record.id, record.firstname, record.middlename, record.lastname, record.company, record.address, record.mobilephone, record.email, record.home, record.work, record.phone2, record.email2, record.email3, record.address2);
     }
 
+    @Step
     public List<ContactData> getContactList() {
         return convertContactList(sessionFactory.fromSession(session -> {
             return session.createQuery("from ContactRecord", ContactRecord.class).list();
@@ -96,6 +97,7 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
+    @Step
     public void createContact(ContactData contactData) {
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
@@ -104,12 +106,14 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
+    @Step
     public List<ContactData> getContactsInGroup(GroupData group) {
         return sessionFactory.fromSession(session -> {
             return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
         });
     }
 
+    @Step
     public boolean isContactInGroup(GroupData group, ContactData contact) {
         var contactsInGroup = getContactsInGroup(group);
         return contactsInGroup.contains(contact);
