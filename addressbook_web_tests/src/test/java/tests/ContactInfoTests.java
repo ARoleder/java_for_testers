@@ -80,7 +80,7 @@ public class ContactInfoTests extends TestBase {
         var addressesInEditForm = app.contacts().getAddressesFromEditForm(contact);
         var expectedAddressesFromDb = Stream.of(contact.address(), contact.address2())
                 .filter(s -> s != null && !"".equals(s))
-                .collect(Collectors.joining()); //переноса на другую строку не требуется, так как в получении адреса из формы ввода getAddressesFromEditForm добавлено удаление переносов
+                .collect(Collectors.joining("\n"));
         Assertions.assertEquals(expectedAddressesFromDb, addressesInEditForm); //сравнение обоих адресов с теми, что в БД и с формой ввода. Так как оба адреса нельзя сравнить с адресами на главной
 
     }

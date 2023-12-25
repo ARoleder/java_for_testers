@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ContactHelper extends HelperBase {
 
@@ -168,19 +170,19 @@ public class ContactHelper extends HelperBase {
     public String getPhones(ContactData contact) {
         openHomePage();
         return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText().replace("\n","");
+                String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
     }
 
     public String getEmails(ContactData contact) {
         openHomePage();
         return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[5]", contact.id()))).getText().replace("\n","");
+                String.format("//input[@id='%s']/../../td[5]", contact.id()))).getText();
     }
 
     public String getAddress(ContactData contact) {
         openHomePage();
         return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[4]", contact.id()))).getText().replace("\n","");
+                String.format("//input[@id='%s']/../../td[4]", contact.id()))).getText();
     }
 
     public Map<String, String> getPhones() {
@@ -200,15 +202,20 @@ public class ContactHelper extends HelperBase {
         var email = manager.driver.findElement(By.name("email")).getAttribute("value");
         var email2 = manager.driver.findElement(By.name("email2")).getAttribute("value");
         var email3 = manager.driver.findElement(By.name("email3")).getAttribute("value");
-        var emailResult = email + email2  + email3;
+        var emailResult = Stream.of(email, email2, email3)
+                .filter(s -> s != null && !"".equals(s))
+                .collect(Collectors.joining("\n"));
         return emailResult;
     }
+
     public String getAddressesFromEditForm(ContactData contact) {
         openHomePage();
         initContactModification(contact);
         var address = manager.driver.findElement(By.name("address")).getAttribute("value");
         var address2 = manager.driver.findElement(By.name("address2")).getAttribute("value");
-        var addressResult = address + address2 ;
+        var addressResult = Stream.of(address, address2)
+                .filter(s -> s != null && !"".equals(s))
+                .collect(Collectors.joining("\n"));
         return addressResult;
     }
 
@@ -219,8 +226,10 @@ public class ContactHelper extends HelperBase {
         var mobile = manager.driver.findElement(By.name("mobile")).getAttribute("value");
         var work = manager.driver.findElement(By.name("work")).getAttribute("value");
         var phone2 = manager.driver.findElement(By.name("phone2")).getAttribute("value");
-        var emailResult = home + mobile + work + phone2;
-        return emailResult;
+        var phoneResult = Stream.of(home, mobile, work, phone2)
+                .filter(s -> s != null && !"".equals(s))
+                .collect(Collectors.joining("\n"));
+        return phoneResult;
     }
 
     public String getAddressFromEditForm(ContactData contact) {
