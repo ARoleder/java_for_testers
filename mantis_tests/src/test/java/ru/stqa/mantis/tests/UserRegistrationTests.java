@@ -21,13 +21,7 @@ public class UserRegistrationTests extends TestBase {
         //извлекаем ссылку из письма
         var messages = app.mail().receive(email, "password", Duration.ofSeconds(10));
         var text = messages.get(0).content();
-        var pattern = Pattern.compile("http://\\S*");
-        var matcher = pattern.matcher(text);
-        var url = "";
-        if (matcher.find()) {
-            url = text.substring(matcher.start(), matcher.end());
-            System.out.println(url);
-        }
+        var url = CommonFunctions.extractUrl(text);
         //переходим по ссылке из письма и завершаем регистрацию (браузер)
         app.session().finishRegistration(url, username, "password");
         //проверяем, что пользователь может залогиниться(httpsessionhelper)
